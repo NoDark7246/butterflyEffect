@@ -1,0 +1,26 @@
+# Система уравнений:
+def ChuaAttractor(XYZ, t, alpha, beta, zeta, delta):
+    x, y, z = XYZ
+    h = zeta*x + (0.5*(delta - zeta))*(np.abs(x + 1) - np.abs(x - 1))
+    x_dt = alpha*(-x + y - h)
+    y_dt = x - y + z
+    z_dt = -beta*y
+    return x_dt, y_dt, z_dt
+
+# Параметры системы и начальные условия:
+alpha = 15.6
+beta = 25.58
+zeta = -5/7
+delta = -8/7
+
+x_0, y_0, z_0 = 1.8, -0.7, -2.85
+
+# Максимальное время и общее количество
+# временных точек:
+tmax, n = 200, 10000
+
+# Интегрируем систему уравнений в каждой точке
+# временного интервала t:
+t = np.linspace(0, tmax, n)
+f = odeint(ChuaAttractor, (x_0, y_0, z_0), t,
+           args=(alpha, beta, zeta, delta))
