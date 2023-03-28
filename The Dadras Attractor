@@ -1,0 +1,26 @@
+# Система уравнений:
+def DadrasAttractor(XYZ, t, rho, sigma, tau, zeta, epsilon):
+    x, y, z = XYZ
+    x_dt = y - rho*x + sigma*y*z
+    y_dt = tau*y - x*z + z
+    z_dt = zeta*x*y - epsilon*z
+    return x_dt, y_dt, z_dt
+
+# Параметры системы и начальные условия:
+rho = 3
+sigma = 2.7
+tau = 1.7
+zeta = 2
+epsilon = 9
+
+x_0, y_0, z_0 = 0.1, 0.03, 0
+
+# Максимальное время и общее количество
+# временных точек:
+tmax, n = 220, 40000
+
+# Интегрируем систему уравнений в каждой точке
+# временного интервала t:
+t = np.linspace(0, tmax, n)
+f = odeint(DadrasAttractor, (x_0, y_0, z_0), t,
+           args=(rho, sigma, tau, zeta, epsilon))
